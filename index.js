@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 app.get("/api/auth/:id", function (req, res) {
 	// Retrieve the tag from our URL path
 	let id = req.params.id;
-	console.log(id);
+	//console.log(id);
 
 	if (id === "111") {
 		return res.status(200).json({ status: "ok" });
