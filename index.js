@@ -10,14 +10,15 @@ app.get("/", (req, res) => {
 	res.send("Express + TypeScript Server");
 });
 
-app.get("/api/auth/:id", async function (req, res) {
+app.get("/api/auth/:id", function (req, res) {
 	// Retrieve the tag from our URL path
 	let id = req.params.id;
+	console.log(id);
 
 	if (id === "111") {
-		res.status(200).json({ status: "error" });
+		return res.status(200).json({ status: "ok" });
 	}
-	res.status(401).json({ status: "error" });
+	return res.status(401).json({ status: "error" });
 });
 
 app.listen(port, () => {
