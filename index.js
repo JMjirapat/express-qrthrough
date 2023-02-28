@@ -22,12 +22,14 @@ app.get("/", (req, res) => {
 });
 
 app.post("/webhook", line.middleware(config), async (req, res) => {
+	console.log("have a request");
 	const { events } = req.body;
 	const promises = [];
 	for (let event of events) {
 		if (event.type === "message" && event.message.type === "text") {
 			const { text } = event.message;
 			if (text === "QR") {
+				console.log("request: QR");
 				const imageUrl =
 					"https://img.freepik.com/premium-vector/scan-me-qr-code-design-qr-code-payment-text-transfer-with-scan-me-button-vector-illustration_499431-1152.jpg";
 				promises.push(
@@ -48,6 +50,7 @@ app.post("/webhook", line.middleware(config), async (req, res) => {
 		}
 	}
 	await Promise.all(promises);
+	console.log("OK");
 	res.status(200).send("OK");
 });
 
