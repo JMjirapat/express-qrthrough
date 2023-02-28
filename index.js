@@ -5,9 +5,50 @@ dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
+const line = require("@line/bot-sdk");
+const bodyParser = require("body-parser");
+
+const config = {
+	channelAccessToken: "YOUR_CHANNEL_ACCESS_TOKEN",
+	channelSecret: "YOUR_CHANNEL_SECRET",
+};
+
+const client = new line.Client(config);
+
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
 	res.send("Express + TypeScript Server");
+});
+
+app.post("/webhook", line.middleware(config), async (req, res) => {
+	const { events } = req.body;
+	const promises = [];
+	for (let event of events) {
+		if (event.type === "message" && event.message.type === "text") {
+			const { text } = event.message;
+			if (text === "QR") {
+				const imageUrl =
+					"https://img.freepik.com/premium-vector/scan-me-qr-code-design-qr-code-payment-text-transfer-with-scan-me-button-vector-illustration_499431-1152.jpg";
+				promises.push(
+					client.replyMessage(event.replyToken, {
+						type: "image",
+						originalContentUrl: imageUrl,
+						previewImageUrl: imageUrl,
+					})
+				);
+			} else {
+				promises.push(
+					client.replyMessage(event.replyToken, {
+						type: "text",
+						text: "I didn't understand that. Can you try again?",
+					})
+				);
+			}
+		}
+	}
+	await Promise.all(promises);
+	res.status(200).send("OK");
 });
 
 app.get("/api/auth/:id", function (req, res) {
