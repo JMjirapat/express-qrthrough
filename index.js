@@ -9,20 +9,20 @@ const line = require("@line/bot-sdk");
 const bodyParser = require("body-parser");
 
 const config = {
-	channelAccessToken:
-		"Z2vgzUdMagjycWtpEq0BVsC928mObkfoUcfKyChHca+diavqEAxroswTeue74iX8NjAvVoRnpCyZfsGkVNdQnif505yW/mQTIC1fLXRzGAORfrlPbNTt70+/voFidVXOkZbjahKEuT51G46ywvQcCwdB04t89/1O/w1cDnyilFU=",
-	channelSecret: "dd861836a91c825087a7d1db7630a7f3",
+	channelAccessToken: process.env.channelAccessToken,
+	channelSecret: process.env.channelSecret,
 };
 
 const client = new line.Client(config);
 
+app.use("/webhook", line.middleware(config));
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
 	res.send("Express + TypeScript Server");
 });
 
-app.post("/webhook", line.middleware(config), async (req, res) => {
+app.post("/webhook", async (req, res) => {
 	console.log("have a request");
 	const { events } = req.body;
 	const promises = [];
