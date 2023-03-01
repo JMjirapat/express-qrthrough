@@ -9,8 +9,9 @@ const line = require("@line/bot-sdk");
 const bodyParser = require("body-parser");
 
 const config = {
-	channelAccessToken: process.env.channelAccessToken,
-	channelSecret: process.env.channelSecret,
+	channelAccessToken:
+		"Z2vgzUdMagjycWtpEq0BVsC928mObkfoUcfKyChHca+diavqEAxroswTeue74iX8NjAvVoRnpCyZfsGkVNdQnif505yW/mQTIC1fLXRzGAORfrlPbNTt70+/voFidVXOkZbjahKEuT51G46ywvQcCwdB04t89/1O/w1cDnyilFU=",
+	channelSecret: "dd861836a91c825087a7d1db7630a7f3",
 };
 
 const client = new line.Client(config);
