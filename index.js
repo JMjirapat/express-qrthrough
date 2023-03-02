@@ -39,10 +39,8 @@ app.post("/webhook", async (req, res) => {
 				promises.push(
 					client.replyMessage(event.replyToken, {
 						type: "image",
-						originalContentUrl: `${req.protocol}://${req.get(
-							"host"
-						)}/${absPath}`,
-						previewImageUrl: `${req.protocol}://${req.get("host")}/${absPath}`,
+						originalContentUrl: `${req.protocol}://${req.get("host")}/111.png`,
+						previewImageUrl: `${req.protocol}://${req.get("host")}/111.png`,
 					})
 				);
 			} else {
