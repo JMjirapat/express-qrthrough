@@ -15,6 +15,9 @@ const config = {
 };
 
 const client = new line.Client(config);
+app.use(express.static("qrcode"));
+
+app.use("/qrcode", express.static(path.join(__dirname)));
 
 app.use("/webhook", line.middleware(config));
 app.use(bodyParser.json());
@@ -31,16 +34,15 @@ app.post("/webhook", async (req, res) => {
 		if (event.type === "message" && event.message.type === "text") {
 			const { text } = event.message;
 			if (text === "QR") {
-				const imagePath = path.join(__dirname, "qrcode/111.png");
+				const imagePath = "111.png";
+				const absPath = path.join(__dirname, imagePath);
 				promises.push(
 					client.replyMessage(event.replyToken, {
 						type: "image",
 						originalContentUrl: `${req.protocol}://${req.get(
 							"host"
-						)}/${imagePath}`,
-						previewImageUrl: `${req.protocol}://${req.get(
-							"host"
-						)}/${imagePath}`,
+						)}/${absPath}`,
+						previewImageUrl: `${req.protocol}://${req.get("host")}/${absPath}`,
 					})
 				);
 			} else {
