@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const path = require("path");
 
 dotenv.config();
 
@@ -31,8 +32,7 @@ app.post("/webhook", async (req, res) => {
 			const { text } = event.message;
 			if (text === "QR") {
 				console.log("request: QR");
-				const imageUrl =
-					"https://img.freepik.com/premium-vector/scan-me-qr-code-design-qr-code-payment-text-transfer-with-scan-me-button-vector-illustration_499431-1152.jpg";
+				const imageUrl = path.join(__dirname) + "/qrcode/111.png";
 				promises.push(
 					client.replyMessage(event.replyToken, {
 						type: "image",
