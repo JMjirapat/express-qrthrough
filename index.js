@@ -31,7 +31,7 @@ app.post("/webhook", async (req, res) => {
 		if (event.type === "message" && event.message.type === "text") {
 			const { text } = event.message;
 			if (text === "QR") {
-				const imagePath = path.join(__dirname, "/qrcode/image.jpg");
+				const imagePath = path.join(__dirname, "qrcode/image.jpg");
 				promises.push(
 					client.replyMessage(event.replyToken, {
 						type: "image",
